@@ -1,35 +1,68 @@
-const fact = (x) => {
-  let f = 1;
-  if (x === 0)
-    return 1;
-  else if (x === 1)
-    return 1;
-  else
-    while (x) {
-      f *= x;
-      x--;
-    }
-  return f;
+const buildArrayFromString = (str) => {
+  let arr = [];
+  for (let i = 0; i < str.length; i++) {
+    arr.push(str[i]);
+  }
+  return arr;
 }
-const identifyDouble = (x, str) => {
-    let count = 0;
-    for (let i = 0; i < str.length; i++) {
-        if (str[i] === x)
-            count++;
+
+/* 
+Heap's method implementation:
+http://homepage.math.uiowa.edu/~goodman/22m150.dir/2007/Permutation%20Generation%20Methods.pdf 
+*/
+const permute = (arr) => {
+	Array.prototype.swap = function (index, otherIndex) {
+		let valueAtIndex = this[index];
+		this[index] = this[otherIndex];
+		this[otherIndex] = valueAtIndex;
+	}
+	let result = [arr.slice()];
+  let length = arr.length;
+	for (let i = 1, heap = new Array(length).fill(0); i < length;) {
+		if (heap[i] < i) {
+			arr.swap(i, i % 2 && heap[i]);
+			result.push(arr.slice());
+			heap[i]++;
+			i = 1;
+		} else {
+			heap[i] = 0;
+			i++;
+		}
+  }
+	return result;
+}
+
+const checkIfAllElemsAreEqual = (str) => {
+  for (let i = 1; i < str.length; i++) {
+    if (str[i] !== str[0]) {
+      return false;
     }
-    return count;
+  }
+  return true;
 }
 
 const permAlone = (str) => {
-  let len = str.length;
-  let total = fact(len);
-  for (let i = 0; i < len; i++) {
-       let dif = identifyDouble(str[i], str);
-       if (dif - 1) {
-           total -= fact(len - dif);
-       }
+  if (str.length === 1) {
+    return 1;
   }
-  return total;
+  if (checkIfAllElemsAreEqual(str)) {
+    return 0;
+  }
+  let arr = buildArrayFromString(str);
+  let permutations = permute(arr);
+  let counter = 0;
+  for (let i = 0; i < permutations.length; i++) {
+    let thereAreDoubles = false;
+    for (let j = 0; j < permutations[i].length - 1; j++) {
+      if (permutations[i][j] === permutations[i][j+1]) {
+        thereAreDoubles = true;
+      }
+    }
+    if (!thereAreDoubles) {
+      counter++;
+    }
+  }
+  return counter;
 }
 
 permAlone('aab');
