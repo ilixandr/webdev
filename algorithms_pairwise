@@ -1,0 +1,19 @@
+const pairwise = (arr, arg) => {
+  let len = arr.length;
+  let sum = 0;
+  let forbidden = [];
+  for (let i = 0; i < len; i ++) {
+    for (let j = i + 1; j < len; j++) {
+      if (arr[i] + arr[j] === arg) {
+        if (!forbidden.includes(i) && !forbidden.includes(j)) {
+          sum += i + j;
+          forbidden.push(i);
+          forbidden.push(j);
+        }
+      }
+    }
+  }
+  return sum;
+}
+
+pairwise([1,4,2,3,0,5], 7);
