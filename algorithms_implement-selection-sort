@@ -1,0 +1,25 @@
+const selectionSort = (array) => {
+  let len = array.length;
+  // change code below this line
+  for (let i = 0; i < len; i++) {
+    let min = array[i];
+    let index = i;
+    for (let j = i + 1; j < len; j++) {
+      if (array[j] < min) {
+        min = array[j];
+        index = j;
+      }
+    }
+    if (index !== i) {
+      let temp = array[i];
+      array[i] = min;
+      array[index] = temp;
+    }
+  }
+  // change code above this line
+  return array;
+}
+
+// test array:
+// [1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]
+console.log(selectionSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]));
