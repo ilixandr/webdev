@@ -1,0 +1,20 @@
+const insertionSort = (array) => {
+  // change code below this line
+  let sortedArray = [array[0]];
+  let len = array.length;
+  for (let i = 1; i < len; i++) {
+    sortedArray.push(array[i]);
+    for (let j = i; j > 0; j--) {
+      if (sortedArray[j] < sortedArray[j - 1]) {
+        let temp = sortedArray[j];
+        sortedArray[j] = sortedArray[j - 1];
+        sortedArray[j - 1] = temp;
+      }
+    }
+  }
+  // change code above this line
+  return sortedArray;
+}
+
+// test array:
+// [1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]
